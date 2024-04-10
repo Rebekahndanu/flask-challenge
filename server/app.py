@@ -23,6 +23,7 @@ db.init_app(app)
 def index():
     return '<h1>Code challenge</h1>'
 
+# Getting all the heroes
 @app.route('/heroes')
 def get_heroes():
     heroes = []
@@ -41,6 +42,7 @@ def get_heroes():
     )
     return response
 
+# Getting a hero using its ID
 @app.route('/heroes/<int:id>')
 def get_hero(id):
     hero = Hero.query.filter(Hero.id==id).first()
@@ -74,7 +76,7 @@ def get_hero(id):
     else:
         return make_response({"error": "Hero not found"}, 404)
 
-
+# Getting all powers
 @app.route('/powers')
 def get_powers():
     powers = Power.query.all()
@@ -95,6 +97,7 @@ def get_powers():
     )
     return response
 
+# Getting a power using its ID
 @app.route('/powers/<int:id>')
 def get_power(id):
     power = Power.query.filter_by(id=id).first()
@@ -108,6 +111,7 @@ def get_power(id):
     else:
         return make_response(jsonify({"error": "Power not found"}), 404)
 
+# Updating the description of a power
 @app.route('/powers/<int:id>', methods=['PATCH'])
 def update_power_by_id(id):
     power = Power.query.filter_by(id=id).first()
@@ -134,6 +138,7 @@ def update_power_by_id(id):
         return make_response(jsonify({"error": "Power not found"}), 404)
 
 
+# Posting a hero_powers
 @app.route('/hero_powers', methods=['POST'])
 def create_hero_power():
     data = request.get_json()
